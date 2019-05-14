@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Message Board</title>
+</head>
+<body>
+    <div class="wrapper">
+            <div class="header">
+                <h1>Dojo Message Board</h1>
+                <% if(messages.message) { %>
+                    <% for (var x of messages.message) { %>
+                    <h3><%= x %></h3>
+                    <% } %>
+                <% } %>
+            </div>
+
+            <div class="main">
+                <form action="/message" method="post">
+                    <label>
+                        Name:
+                        <input type="text" name="name">
+                    </label>
+                    <label>
+                        Message:
+                        <textarea name="content"></textarea>
+                    </label>
+                    <input type="submit" value="submit">
+                </form>
+                
+                <% for (var m of message) { %>
+                    <div class="mess">
+                        <h3>Name: <%= m.name %></h3>
+                        <h3>Message: <%= m.content %></h3>
+                        <div class="com">
+                            <% for (var c of m.comments) { %>
+                                <p>Name: <%= c.name %></p>
+                                <p>Comment: <%= c.content %></p>
+                            <% } %>
+                            <form action="/comment" method="post">
+                                <label>
+                                    Name:
+                                    <input type="text" name="name">
+                                </label>
+                                <label>
+                                    Comment:
+                                    <textarea name="content"></textarea>
+                                </label>
+                                <input type="hidden" name="id" value="<%= m._id %>">
+                                <input type="submit" value="submit">
+                            </form>
+                        </div>
+                    </div>
+                    <hr>
+                <% } %>
+
+                
+            </div>
+        </div>
+</body>
+</html>
